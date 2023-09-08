@@ -22,6 +22,7 @@ from pruebas import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("books/", include("books.urls", namespace="books")),
-    path('', views.home, name='home'),
+    path('flex/', views.flex, name='flex'),
+    path('wrap/', views.wrap, name='wrap'),
 ]
 
