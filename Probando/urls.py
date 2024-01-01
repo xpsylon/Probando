@@ -21,12 +21,5 @@ from pruebas import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
     path('', include('django.contrib.auth.urls')),
-=======
-    path("books/", include("books.urls", namespace="books")),
-    path('flex/', views.flex, name='flex'),
-    path('wrap/', views.wrap, name='wrap'),
->>>>>>> 04644d8e74dcf64cbc084de41f3ca66af32170ed
 ]
-
