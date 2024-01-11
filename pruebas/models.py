@@ -69,8 +69,8 @@ class Article(models.Model):
     class Meta:
         ordering = ['headline']
     
-    
-class Publication(models.Model):
+# MANY TO MANY RELATIOHSHIP-------------------------
+class Publication(models.Model): # REVERSE SIDE (use articulo_set)
     title = models.CharField(max_length=30)
 
     class Meta:
@@ -81,10 +81,12 @@ class Publication(models.Model):
     
 class Articulo(models.Model):
     headline = models.CharField(max_length=100)
-    publications = models.ManyToManyField(Publication)
+    publications = models.ManyToManyField(Publication) # FORWARD SIDE (use this field name)
 
     class Meta:
         ordering = ['headline']
 
     def __str__(self):
         return self.headline
+
+#---------------------------------------------------
