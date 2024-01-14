@@ -114,7 +114,7 @@ class Entry(models.Model):
     mod_date = models.DateField(default=date.today)
     authors = models.ManyToManyField(Author)
     number_of_comments = models.IntegerField(default=0)
-    number_of_pimgbacks = models.IntegerField(default=0)
+    number_of_pingbacks = models.IntegerField(default=0)
     rating = models.IntegerField(default=5)
 
     def __str__(self):
