@@ -138,7 +138,7 @@ class BuyerProduct(models.Model):
     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    purchase_date = models.DateField()b
+    purchase_date = models.DateField()
 
 class Review(models.Model):
     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
