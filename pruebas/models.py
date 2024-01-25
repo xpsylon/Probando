@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django.contrib.auth.models import User
 
 # MANY TO MANY RELATIONSHIPS------------------------
 class Person(models.Model):
@@ -119,4 +120,33 @@ class Entry(models.Model):
 
     def __str__(self):
         return self.headline
+
+# ANOTHER MANY TO MANY RELATION:
+class Buyer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
+    
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    buyers = models.ManyToManyField(Buyer, through='BuyerProduct')
+
+class BuyerProduct(models.Model):
+    buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    purchase_date = models.DateField()b
+
+class Review(models.Model):
+    buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    comment = models.TextField()
+    review_date = models.DateField()
+
+    class Meta:
+        unique_together = ('buyer', 'product')
     
