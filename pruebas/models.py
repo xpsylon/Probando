@@ -144,6 +144,7 @@ class BuyerProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     purchase_date = models.DateField()
+    
 
 class Review(models.Model):
     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
@@ -151,14 +152,4 @@ class Review(models.Model):
     rating = models.IntegerField()
     comment = models.TextField()
     review_date = models.DateField()
-
-    class Meta:
-        unique_together = ('buyer', 'product')
-    """ You’re correct. The current Review model doesn’t prevent a user from reviewing a product they haven’t purchased. To enforce this rule, you could add a check in your view or model to ensure that a UserProduct instance exists for the user and product before a review is saved.
-    Here’s an example of how you could modify the save method of the Review model to include this check: """
-    
-    def clean (self):
-        buyer_product_exists = Buyer.objects.filter(buyer=self.buyer, product=self.product).exists
-        if not buyer_product_exists:
-            raise ValidationError('Buyer didnt buy that product!')
     
