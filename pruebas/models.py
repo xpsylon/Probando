@@ -33,9 +33,8 @@ class Place(models.Model):
     address = models.CharField(max_length=80)
     
     def __str__(self) -> str:
-        return f'{self.name} the place'
+        return f'{self.name} the place'  
     
-
 class Restaurant(models.Model):
     place = models.OneToOneField(Place, on_delete=models.CASCADE, primary_key=True)
     serves_hot_dogs = models.BooleanField(default=False)
@@ -152,4 +151,158 @@ class Review(models.Model):
     rating = models.IntegerField()
     comment = models.TextField()
     review_date = models.DateField()
+
+# TRYING TO ARRANGE A CITY STATE COUNTRY MODELS:
+class Country(models.Model):
+    COUNTRY_CHOICES = [
+        ('Argentina', 'Argentina'),
+        ('Brazil', 'Brazil'),
+        ('Mexico', 'Mexico'),
+        ('Venezuela', 'Venezuela'),
+    ]
+    name = models.CharField(max_length=100, choices = COUNTRY_CHOICES)
+
+    def __str__(self):
+        return self.name
     
+class State(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+        
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.name}, {self.state}, {self.country}'
+    
+class ArgentinaState(State):
+    PROVINCE_CHOICES = [
+        ('Buenos Aires', 'Buenos Aires'),
+        ('Catamarca', 'Catamarca'),
+        ('Chaco', 'Chaco'),
+        ('Chubut', 'Chubut'),
+        ('Córdoba', 'Córdoba'),
+        ('Corrientes', 'Corrientes'),
+        ('Entre Ríos', 'Entre Ríos'),
+        ('Formosa', 'Formosa'),
+        ('Jujuy', 'Jujuy'),
+        ('La Pampa', 'La Pampa'),
+        ('La Rioja', 'La Rioja'),
+        ('Mendoza', 'Mendoza'),
+        ('Misiones', 'Misiones'),
+        ('Neuquén', 'Neuquén'),
+        ('Río Negro', 'Río Negro'),
+        ('Salta', 'Salta'),
+        ('San Juan', 'San Juan'),
+        ('San Luis', 'San Luis'),
+        ('Santa Cruz', 'Santa Cruz'),
+        ('Santa Fe', 'Santa Fe'),
+        ('Santiago del Estero', 'Santiago del Estero'),
+        ('Tierra del Fuego', 'Tierra del Fuego'),
+        ('Tucumán', 'Tucumán'),
+    ]
+    states = models.CharField(max_length=100, choices=PROVINCE_CHOICES)
+
+# Predefined choices for states/provinces of Brazil
+class BrazilState(State):
+    STATE_CHOICES = [
+        ('Acre', 'Acre'),
+        ('Alagoas', 'Alagoas'),
+        ('Amapá', 'Amapá'),
+        ('Amazonas', 'Amazonas'),
+        ('Bahia', 'Bahia'),
+        ('Ceará', 'Ceará'),
+        ('Espírito Santo', 'Espírito Santo'),
+        ('Goiás', 'Goiás'),
+        ('Maranhão', 'Maranhão'),
+        ('Mato Grosso', 'Mato Grosso'),
+        ('Mato Grosso do Sul', 'Mato Grosso do Sul'),
+        ('Minas Gerais', 'Minas Gerais'),
+        ('Pará', 'Pará'),
+        ('Paraíba', 'Paraíba'),
+        ('Paraná', 'Paraná'),
+        ('Pernambuco', 'Pernambuco'),
+        ('Piauí', 'Piauí'),
+        ('Rio de Janeiro', 'Rio de Janeiro'),
+        ('Rio Grande do Norte', 'Rio Grande do Norte'),
+        ('Rio Grande do Sul', 'Rio Grande do Sul'),
+        ('Rondônia', 'Rondônia'),
+        ('Roraima', 'Roraima'),
+        ('Santa Catarina', 'Santa Catarina'),
+        ('São Paulo', 'São Paulo'),
+        ('Sergipe', 'Sergipe'),
+        ('Tocantins', 'Tocantins'),
+    ]
+    states = models.CharField(max_length=100, choices=STATE_CHOICES)
+
+# Predefined choices for states/provinces of Mexico
+class MexicoState(State):
+    STATE_CHOICES = [
+        ('Aguascalientes', 'Aguascalientes'),
+        ('Baja California', 'Baja California'),
+        ('Baja California Sur', 'Baja California Sur'),
+        ('Campeche', 'Campeche'),
+        ('Chiapas', 'Chiapas'),
+        ('Chihuahua', 'Chihuahua'),
+        ('Coahuila', 'Coahuila'),
+        ('Colima', 'Colima'),
+        ('Durango', 'Durango'),
+        ('Guanajuato', 'Guanajuato'),
+        ('Guerrero', 'Guerrero'),
+        ('Hidalgo', 'Hidalgo'),
+        ('Jalisco', 'Jalisco'),
+        ('México', 'México'),
+        ('Michoacán', 'Michoacán'),
+        ('Morelos', 'Morelos'),
+        ('Nayarit', 'Nayarit'),
+        ('Nuevo León', 'Nuevo León'),
+        ('Oaxaca', 'Oaxaca'),
+        ('Puebla', 'Puebla'),
+        ('Querétaro', 'Querétaro'),
+        ('Quintana Roo', 'Quintana Roo'),
+        ('San Luis Potosí', 'San Luis Potosí'),
+        ('Sinaloa', 'Sinaloa'),
+        ('Sonora', 'Sonora'),
+        ('Tabasco', 'Tabasco'),
+        ('Tamaulipas', 'Tamaulipas'),
+        ('Tlaxcala', 'Tlaxcala'),
+        ('Veracruz', 'Veracruz'),
+        ('Yucatán', 'Yucatán'),
+        ('Zacatecas', 'Zacatecas'),
+    ]
+    states = models.CharField(max_length=100, choices=STATE_CHOICES)
+
+# Predefined choices for states/provinces of Venezuela
+class VenezuelaState(State):
+    STATE_CHOICES = [
+        ('Amazonas', 'Amazonas'),
+        ('Anzoátegui', 'Anzoátegui'),
+        ('Apure', 'Apure'),
+        ('Aragua', 'Aragua'),
+        ('Barinas', 'Barinas'),
+        ('Bolívar', 'Bolívar'),
+        ('Carabobo', 'Carabobo'),
+        ('Cojedes', 'Cojedes'),
+        ('Delta Amacuro', 'Delta Amacuro'),
+        ('Falcón', 'Falcón'),
+        ('Guárico', 'Guárico'),
+        ('Lara', 'Lara'),
+        ('Mérida', 'Mérida'),
+        ('Miranda', 'Miranda'),
+        ('Monagas', 'Monagas'),
+        ('Nueva Esparta', 'Nueva Esparta'),
+        ('Portuguesa', 'Portuguesa'),
+        ('Sucre', 'Sucre'),
+        ('Táchira', 'Táchira'),
+        ('Trujillo', 'Trujillo'),
+        ('Vargas', 'Vargas'),
+        ('Yaracuy', 'Yaracuy'),
+        ('Zulia', 'Zulia'),
+    ]
+    states = models.CharField(max_length=100, choices=STATE_CHOICES)
+
