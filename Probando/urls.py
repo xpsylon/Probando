@@ -23,5 +23,5 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
-    path('temp/', TemplateView.as_view(template_name='pruebas:temp.html', extra_content={'title:Proyecto Siete'})),
+    path('temp/', TemplateView.as_view(template_name='pruebas/temp.html', extra_context={'title':'Proyecto Siete'})),
 ]
