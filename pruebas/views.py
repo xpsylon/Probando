@@ -1,12 +1,24 @@
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 from .forms import ArgentinaStateForm
-
+from django.views.generic import TemplateView
+from .models import Blog
 def flex(request):
     return render(request, 'pruebas/flexbox0.html')
 
 def wrap(request):
     return render(request, 'pruebas/flexbox-wrap0.html')
+
+class Temp2View(TemplateView):
+    template_name='pruebas/temp2.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["blogs"] = Blog.objects.all()
+        context["titulo"] = 'Lista de blogs'
+        return context
+    
+
 
 class ArgentinaStateFormView(FormView):
     template_name = 'pruebas/argentina_state_form.html'
