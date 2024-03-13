@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 from .forms import ArgentinaStateForm
-from django.views.generic import TemplateView
-from .models import Blog
+from django.views.generic import TemplateView, RedirectView, DetailView
+from .models import Blog, Article
+from django.shortcuts import get_object_or_404
+
 def flex(request):
     return render(request, 'pruebas/flexbox0.html')
 
@@ -18,7 +20,18 @@ class Temp2View(TemplateView):
         context["titulo"] = 'Lista de blogs'
         return context
     
+class ArticleCounterRedirectView(RedirectView):
+    permanent = False
+    query_string = True
+    pattern_name = 'article-detail'
 
+    def get_redirect_url(self, *args, **kwargs) -> str | None:
+        article = get_object_or_404(Article, pk=kwargs['pk'])
+        article.update_counter()
+        return super().get_redirect_url(*args, **kwargs)
+    
+class ArticleDetailView(DetailView):
+    model = Article
 
 class ArgentinaStateFormView(FormView):
     template_name = 'pruebas/argentina_state_form.html'
