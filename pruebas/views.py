@@ -23,7 +23,7 @@ class Temp2View(TemplateView):
 class ArticleCounterRedirectView(RedirectView):
     permanent = False
     query_string = True
-    pattern_name = 'article-detail'
+    pattern_name = 'pruebas:article-detail'
 
     def get_redirect_url(self, *args, **kwargs) -> str | None:
         article = get_object_or_404(Article, pk=kwargs['pk'])
